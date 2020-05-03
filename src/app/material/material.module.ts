@@ -6,6 +6,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MaterialComponent } from './material.component';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { FlexModule } from '@angular/flex-layout';
 
 @NgModule({
   declarations: [],
@@ -15,14 +16,16 @@ import { MatFormFieldModule } from '@angular/material/form-field';
     MatButtonModule,
     MatIconModule,
     MatInputModule,
-    MatFormFieldModule
+    MatFormFieldModule,
+    FlexModule
   ],
   exports: [
     BrowserAnimationsModule, 
     MatButtonModule,
     MatIconModule,
     MatInputModule,
-    MatFormFieldModule
+    MatFormFieldModule,
+    FlexModule
   ]
 })
 export class MaterialModule { } 
