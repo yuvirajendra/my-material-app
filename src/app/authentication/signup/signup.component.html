@@ -22,11 +22,14 @@
         <mat-form-field>
             <mat-label>Your DOB</mat-label>
             <input name="dob" [matDatepicker]="picker"
-                ngModel matInput>
+                ngModel matInput [max]="maxAge" [min]="minAge">
             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
             <mat-datepicker #picker></mat-datepicker>
         </mat-form-field>
 
-        <button mat-raised-button color="primary">Sign Up</button>
+        <mat-checkbox name="agreement" ngModel required color="primary">Agree to Terms and Conditions</mat-checkbox>
+
+        <button mat-raised-button color="primary"
+            [disabled]="signUpForm.invalid">Sign Up</button>
     </form>
 </section>
