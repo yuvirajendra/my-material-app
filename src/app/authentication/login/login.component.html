@@ -1,0 +1,20 @@
+<section>
+    <form #loginForm="ngForm" 
+          fxLayout="column" fxLayoutGap="10px"
+          fxLayoutAlign="center center">
+        <mat-form-field>
+            <input type="text" #userId="ngModel" name="userId" placeholder="Your User ID" 
+                matInput ngModel required>
+            <mat-error *ngIf="userId.hasError('required')">User ID is required</mat-error>
+        </mat-form-field>   
+        
+        <mat-form-field>
+            <input type="password" #pwd="ngModel" name="password" placeholder="Your Password" 
+                matInput ngModel required>
+            <mat-error *ngIf="pwd.hasError('required')">Password is required</mat-error>
+        </mat-form-field>
+
+        <button mat-raised-button color="primary"
+            [disabled]="loginForm.invalid">Login</button>
+    </form>
+</section>
