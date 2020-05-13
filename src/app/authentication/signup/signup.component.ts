@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { SignupService } from './signup.service';
 
 @Component({
   selector: 'app-signup',
@@ -11,7 +12,7 @@ export class SignupComponent implements OnInit {
   minAge;
   maxAge;
 
-  constructor() { }
+  constructor(private _signUpService: SignupService) { }
 
   ngOnInit(): void {
     this.minAge = new Date(); /* This will return the current date */
@@ -24,7 +25,12 @@ export class SignupComponent implements OnInit {
 
   submitSignUpForm(objSignUpForm: NgForm) {
     console.log("Inside SignUp Submit");
-    console.log(objSignUpForm);
-  }
+    console.log(objSignUpForm.form.value);
 
+    this._signUpService.signUp(objSignUpForm.form.value).subscribe(
+      postMessage => {
+        console.log(postMessage);
+      }
+    )
+  }
 }

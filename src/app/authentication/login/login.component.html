@@ -1,7 +1,8 @@
 <section>
     <form #loginForm="ngForm" 
           fxLayout="column" fxLayoutGap="10px"
-          fxLayoutAlign="center center">
+          fxLayoutAlign="center center"
+          (ngSubmit)="submitLoginForm(loginForm)">
         <mat-form-field>
             <input type="text" #userId="ngModel" name="userId" placeholder="Your User ID" 
                 matInput ngModel required>
