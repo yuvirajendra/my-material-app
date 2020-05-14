@@ -8,13 +8,17 @@ import { SignupComponent } from './authentication/signup/signup.component';
 import { MaterialComponent } from './material/material.component';
 import { LoginComponent } from './authentication/login/login.component';
 import { HttpClientModule } from '@angular/common/http';
+import { WelcomeComponent } from './welcome/welcome.component';
+import { TrainingComponent } from './training/training.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     MaterialComponent,
     SignupComponent,
-    LoginComponent
+    LoginComponent,
+    WelcomeComponent,
+    TrainingComponent
   ],
   imports: [
     BrowserModule,

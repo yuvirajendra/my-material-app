@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { LoginService } from './login.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -9,7 +10,7 @@ import { LoginService } from './login.service';
 })
 export class LoginComponent implements OnInit {
 
-  constructor(private _loginService: LoginService) { }
+  constructor(private _loginService: LoginService, private router: Router) { }
 
   ngOnInit(): void {
   }
@@ -20,6 +21,7 @@ export class LoginComponent implements OnInit {
     this._loginService.authenticate(objLoginForm.form.value).subscribe(
       loginResponse => {
         console.log(loginResponse);
+        this.router.navigate(['/material']);
       }
     )
   }
