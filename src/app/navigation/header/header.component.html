@@ -1,0 +1,23 @@
+<mat-toolbar color="primary">
+    <div>
+        <button mat-icon-button (click)="toggle()">
+            <mat-icon>menu</mat-icon>
+        </button>
+    </div>
+    <div>
+        LOGO
+    </div>
+    <div fxFlex fxLayout fxLayoutAlign="flex-end"> <!-- To display the label right aligned -->
+        <ul fxLayout fxLayoutGap="10px" class="nav-item" fxHide="true">
+            <li>
+                <a routerLink="login">Login</a>
+            </li>
+            <li>
+                <a routerLink="signup">Signup</a>
+            </li>
+            <li>
+                <a routerLink="training">Training</a>
+            </li>                    
+        </ul>                
+    </div>
+</mat-toolbar>
