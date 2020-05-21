@@ -9,7 +9,6 @@ import { Router } from '@angular/router';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-
   constructor(private _loginService: LoginService, private router: Router) { }
 
   ngOnInit(): void {
@@ -20,8 +19,8 @@ export class LoginComponent implements OnInit {
     console.log(objLoginForm.form.value);
     this._loginService.authenticate(objLoginForm.form.value).subscribe(
       loginResponse => {
-        console.log(loginResponse);
-        this.router.navigate(['/material']);
+        console.log(loginResponse);        
+        this.router.navigate(['/training']);
       }
     )
   }

@@ -9,15 +9,19 @@
     </div>
     <div fxFlex fxLayout fxLayoutAlign="flex-end"> <!-- To display the label right aligned -->
         <ul fxLayout fxLayoutGap="10px" class="nav-item" fxHide="true">
-            <li>
+            
+            <li *ngIf="!isAuth">
                 <a routerLink="login">Login</a>
             </li>
-            <li>
+            <li *ngIf="!isAuth">
                 <a routerLink="signup">Signup</a>
             </li>
-            <li>
+            <li *ngIf="isAuth">
                 <a routerLink="training">Training</a>
-            </li>                    
+            </li>    
+            <li *ngIf="isAuth">
+                <a routerLink="logout">Logout</a>
+            </li>                
         </ul>                
     </div>
 </mat-toolbar>

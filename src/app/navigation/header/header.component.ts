@@ -1,4 +1,6 @@
-import { Component, OnInit,Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, OnDestroy } from '@angular/core';
+import { LoginService } from 'src/app/authentication/login/login.service';
+import { Subscription } from 'rxjs/Subscription';
 
 @Component({
   selector: 'app-header',
@@ -7,13 +9,25 @@ import { Component, OnInit,Output, EventEmitter } from '@angular/core';
 })
 export class HeaderComponent implements OnInit {
   @Output() sideNavToggle = new EventEmitter();
-  constructor() { }
+  isAuth:boolean = false;
+  authSubscription: Subscription;
+
+  constructor(private _loginService: LoginService) { }
 
   ngOnInit(): void {
+    this.authSubscription = this._loginService.isAuthorized.subscribe(
+      result => {
+        this.isAuth = result;
+      }
+    );
   }
 
   toggle(): void {
     console.log("Output Directive");
     this.sideNavToggle.emit();
+  }
+
+  ngOnDestroy() {
+    this.authSubscription.unsubscribe();
   }
 }
