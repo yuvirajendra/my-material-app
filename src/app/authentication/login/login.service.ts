@@ -4,13 +4,14 @@ import { environment } from '../../../environments/environment';
 import { map, retry, catchError } from 'rxjs/operators';
 import { throwError } from 'rxjs';
 import { Subject } from 'rxjs/Subject';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
 })
 export class LoginService {  
   isAuthorized = new Subject<boolean>();
-  constructor(private _httpClient: HttpClient) { }
+  constructor(private _httpClient: HttpClient, private router: Router) { }
 
   authenticate(postRequest) {
     var authenticationUrl = environment.authenticationServiceUrl;
@@ -26,4 +27,8 @@ export class LoginService {
     return throwError(objError);
   }
 
+  onLogout() {
+    this.isAuthorized.next(false);
+    this.router.navigate(['/login']);
+  }
 }

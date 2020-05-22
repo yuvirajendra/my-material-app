@@ -15,11 +15,7 @@ export class HeaderComponent implements OnInit {
   constructor(private _loginService: LoginService) { }
 
   ngOnInit(): void {
-    this.authSubscription = this._loginService.isAuthorized.subscribe(
-      result => {
-        this.isAuth = result;
-      }
-    );
+    this.callLoginService();
   }
 
   toggle(): void {
@@ -27,7 +23,19 @@ export class HeaderComponent implements OnInit {
     this.sideNavToggle.emit();
   }
 
+  onLogout(): void {
+    this._loginService.onLogout();
+  }
+
   ngOnDestroy() {
     this.authSubscription.unsubscribe();
+  }
+
+  callLoginService() {
+    this.authSubscription = this._loginService.isAuthorized.subscribe(
+      result => {
+        this.isAuth = result;
+      }
+    );
   }
 }

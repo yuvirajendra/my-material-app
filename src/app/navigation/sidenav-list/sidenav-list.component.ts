@@ -15,11 +15,12 @@ export class SidenavListComponent implements OnInit {
   constructor(private _loginService: LoginService) { }
 
   ngOnInit(): void {
-    this.objAuthSubscription = this._loginService.isAuthorized.subscribe(
-      result => {
-        this.isAuth = result;
-      }
-    )
+    this.callLoginService();
+  }
+  
+  onLogout(): void {
+    this.onClose();
+    this._loginService.onLogout();    
   }
 
   onClose(): void {
@@ -29,5 +30,13 @@ export class SidenavListComponent implements OnInit {
 
   ngOnDestroy() {
     this.objAuthSubscription.unsubscribe();
+  }
+
+  callLoginService() {
+    this.objAuthSubscription = this._loginService.isAuthorized.subscribe(
+      result => {
+        this.isAuth = result;
+      }
+    );
   }
 }

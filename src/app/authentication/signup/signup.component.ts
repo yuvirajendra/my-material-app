@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { SignupService } from './signup.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-signup',
@@ -12,7 +13,7 @@ export class SignupComponent implements OnInit {
   minAge;
   maxAge;
 
-  constructor(private _signUpService: SignupService) { }
+  constructor(private _signUpService: SignupService, private router: Router) { }
 
   ngOnInit(): void {
     this.minAge = new Date(); /* This will return the current date */
@@ -30,6 +31,7 @@ export class SignupComponent implements OnInit {
     this._signUpService.signUp(objSignUpForm.form.value).subscribe(
       postMessage => {
         console.log(postMessage);
+        this.router.navigate(['/login']);
       }
     )
   }
