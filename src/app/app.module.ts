@@ -16,6 +16,7 @@ import { NewTrainingComponent } from './training/new-training/new-training.compo
 import { CurrentTrainingComponent } from './training/current-training/current-training.component';
 import { PastTrainingComponent } from './training/past-training/past-training.component';
 import { StopTrainingComponent } from './training/current-training/stop-training.component';
+import { AuthGuard } from './authentication/login/auth.guard';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,7 @@ import { StopTrainingComponent } from './training/current-training/stop-training
     ReactiveFormsModule,
     HttpClientModule
   ],
-  providers: [],
+  providers: [AuthGuard],
   bootstrap: [AppComponent],
   entryComponents: [StopTrainingComponent]
 })
