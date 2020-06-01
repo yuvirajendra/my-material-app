@@ -17,6 +17,9 @@ import { CurrentTrainingComponent } from './training/current-training/current-tr
 import { PastTrainingComponent } from './training/past-training/past-training.component';
 import { StopTrainingComponent } from './training/current-training/stop-training.component';
 import { AuthGuard } from './authentication/login/auth.guard';
+import { AngularFireModule } from 'angularfire2';
+import { AngularFirestoreModule } from 'angularfire2/firestore';
+import { environment } from 'src/environments/environment';
 
 @NgModule({
   declarations: [
@@ -39,7 +42,9 @@ import { AuthGuard } from './authentication/login/auth.guard';
     MaterialModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFirestoreModule
   ],
   providers: [AuthGuard],
   bootstrap: [AppComponent],
