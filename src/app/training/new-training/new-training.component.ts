@@ -1,4 +1,4 @@
-import { Component, OnInit, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output, OnDestroy } from '@angular/core';
 import { TrainingService } from '../training.service';
 import { Exercise } from '../exercise';
 import { NgForm } from '@angular/forms';
@@ -41,5 +41,9 @@ export class NewTrainingComponent implements OnInit {
     console.log(form.value);
     this._trainingService.startExercise(form.value.selectExercise);
     // this.trainingStart.emit();
+  }
+
+  ngOnDestroy() {
+    this.exerciseSubscription.unsubscribe();
   }
 }

@@ -7,14 +7,11 @@ import { AngularFirestore } from 'angularfire2/firestore';
   providedIn: 'root'
 })
 export class TrainingService {
-
   private availableExercise: Exercise[] = [];
-
-  private completedExercises: Exercise[] = [];
-
   private runningExercise: Exercise;
   changedExercise = new Subject<Exercise>();
   emitExercises = new Subject<Exercise[]>();
+  emitCompletedExercises = new Subject<Exercise[]>();
   constructor(private firebaseDB: AngularFirestore) { }
 
   fetchAvailableExercise() {
@@ -55,7 +52,7 @@ export class TrainingService {
 
   saveCompletedExercise() {
     console.log("saveCompletedExercise");
-    this.completedExercises.push({
+    this.addExerciseToDB({
       ...this.runningExercise, 
       status: 'completed',
       date: new Date()
@@ -66,7 +63,7 @@ export class TrainingService {
 
   saveCancelledExercise(progress: number) {
     console.log("saveCancelledExercise");
-    this.completedExercises.push({
+    this.addExerciseToDB({
       ...this.runningExercise, 
       exerciseDuration: this.runningExercise.exerciseDuration * (progress/100),
       calories: this.runningExercise.calories * (progress/100),
@@ -79,6 +76,18 @@ export class TrainingService {
 
   getCompletedExercise() {
     console.log("getCompletedExercise");
-    return this.completedExercises.slice();
+    this.firebaseDB.collection("completed_exercise")
+                   .valueChanges()
+                   .subscribe(
+                    (exercises: Exercise[]) => {
+                      this.emitCompletedExercises.next(exercises);
+                      console.log("Completed Exercise from DB");
+                      console.log(exercises);
+                    }
+                   );
+  }
+
+  private addExerciseToDB(exercise: Exercise) {
+    this.firebaseDB.collection('completed_exercise').add(exercise);
   }
 }
