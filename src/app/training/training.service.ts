@@ -1,27 +1,44 @@
 import { Injectable } from '@angular/core';
 import { Exercise } from './exercise';
 import { Subject } from 'rxjs';
+import { AngularFirestore } from 'angularfire2/firestore';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TrainingService {
 
-  private availableExercise: Exercise[] = [
-    {exerciseId: 'crunches', exerciseName: 'Crunches', exerciseDuration: 30, calories: 100},
-    {exerciseId: 'squats', exerciseName: 'Squats', exerciseDuration: 60, calories: 200},
-    {exerciseId: 'situps', exerciseName: 'Sit ups', exerciseDuration: 100, calories: 150},
-    {exerciseId: 'pushups', exerciseName: 'Push ups', exerciseDuration: 30, calories: 175},
-    {exerciseId: 'walking', exerciseName: 'Walking', exerciseDuration: 600, calories: 250},
-    {exerciseId: 'jogging', exerciseName: 'Jogging', exerciseDuration: 300, calories: 300}
-  ];
+  private availableExercise: Exercise[] = [];
 
   private completedExercises: Exercise[] = [];
 
   private runningExercise: Exercise;
   changedExercise = new Subject<Exercise>();
+  emitExercises = new Subject<Exercise[]>();
+  constructor(private firebaseDB: AngularFirestore) { }
 
-  constructor() { }
+  fetchAvailableExercise() {
+    this.firebaseDB.collection('available_exercises')
+    .snapshotChanges()
+    .map(docArray => {
+        return docArray.map(doc => {
+            return {
+              exerciseId: doc.payload.doc.id,
+              exerciseName: doc.payload.doc.data()["exerciseName"],
+              exerciseDuration: doc.payload.doc.data()["exerciseDuration"],
+              calories: doc.payload.doc.data()["calories"]
+            };
+          }
+        )
+      }
+    )
+    .subscribe(
+      (exercises: Exercise[]) => {
+        this.availableExercise = exercises;
+        this.emitExercises.next([...this.availableExercise]);
+      }
+    )
+  }
 
   getExercise() {
     return this.availableExercise.slice(); // Creates a copy of the varaible and return to the invoker

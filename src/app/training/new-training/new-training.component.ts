@@ -4,6 +4,7 @@ import { Exercise } from '../exercise';
 import { NgForm } from '@angular/forms';
 import { AngularFirestore } from 'angularfire2/firestore';
 import { Observable } from 'rxjs';
+import { Subscription } from 'rxjs';
 import 'rxjs/add/operator/map';
 
 @Component({
@@ -14,8 +15,9 @@ import 'rxjs/add/operator/map';
 export class NewTrainingComponent implements OnInit {
 
   @Output() trainingStart = new EventEmitter();
-  //exerciseList: Exercise[] = [];
-  exerciseList: Observable<Exercise[]>;
+  exerciseList: Exercise[] = [];
+  exerciseSubscription: Subscription;
+  //exerciseList: Observable<Exercise[]>;
 
   constructor(private _trainingService: TrainingService, 
               private firebaseDB: AngularFirestore) { }
@@ -23,20 +25,13 @@ export class NewTrainingComponent implements OnInit {
   ngOnInit(): void {
     console.log("Inside ngInit of New Training");
     //this.exerciseList = this._trainingService.getExercise();
-    this.exerciseList = this.firebaseDB.collection('available_exercises')
-                   .snapshotChanges()
-                   .map(docArray => {
-                       return docArray.map(doc => {
-                           return {
-                             exerciseId: doc.payload.doc.id,
-                             exerciseName: doc.payload.doc.data()["exerciseName"],
-                             exerciseDuration: doc.payload.doc.data()["exerciseDuration"],
-                             calories: doc.payload.doc.data()["calories"]
-                           };
-                         }
-                       )
-                     }
-                   );
+    this.exerciseSubscription = this._trainingService.emitExercises.subscribe(
+      exercises => {
+        this.exerciseList = exercises;        
+      }
+    )
+
+    this._trainingService.fetchAvailableExercise();
 
     console.log(this.exerciseList);
   }
