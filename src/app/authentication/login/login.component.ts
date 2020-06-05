@@ -17,11 +17,12 @@ export class LoginComponent implements OnInit {
   submitLoginForm(objLoginForm: NgForm) {
     console.log("Inside Login Submit");
     console.log(objLoginForm.form.value);
-    this._loginService.authenticate(objLoginForm.form.value).subscribe(
-      loginResponse => {
-        console.log(loginResponse);        
-        this.router.navigate(['/training']);
-      }
-    )
+    this._loginService.authenticate(objLoginForm.form.value);
+    // .subscribe(
+    //   loginResponse => {
+    //     console.log(loginResponse);        
+    //     this.router.navigate(['/training']);
+    //   }
+    // )
   }
 }

@@ -13,7 +13,8 @@ export class SignupComponent implements OnInit {
   minAge;
   maxAge;
 
-  constructor(private _signUpService: SignupService, private router: Router) { }
+  constructor(private _signUpService: SignupService, 
+              private router: Router) { }
 
   ngOnInit(): void {
     this.minAge = new Date(); /* This will return the current date */
@@ -28,11 +29,12 @@ export class SignupComponent implements OnInit {
     console.log("Inside SignUp Submit");
     console.log(objSignUpForm.form.value);
 
-    this._signUpService.signUp(objSignUpForm.form.value).subscribe(
-      postMessage => {
-        console.log(postMessage);
-        this.router.navigate(['/login']);
-      }
-    )
+    this._signUpService.signUp(objSignUpForm.form.value);
+    // .subscribe(
+    //   postMessage => {
+    //     console.log(postMessage);
+    //     this.router.navigate(['/login']);
+    //   }
+    // )
   }
 }

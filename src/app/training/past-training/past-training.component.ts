@@ -12,7 +12,7 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./past-training.component.css']
 })
 export class PastTrainingComponent implements OnInit, AfterViewInit {
-  displayExerciseColumns:string[] = ['exerciseId', 'exerciseName', 'exerciseDuration', 'calories', 'status', 'date'];
+  displayExerciseColumns:string[] = ['exerciseName', 'exerciseDuration', 'calories', 'status', 'date'];
   dataSource: MatTableDataSource<Exercise>;
   @ViewChild(MatSort, {static: true}) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
