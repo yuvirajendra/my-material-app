@@ -8,6 +8,8 @@ import { Router } from '@angular/router';
 import { AngularFireAuth}  from 'angularfire2/auth';
 import { User } from './user';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Store } from '@ngrx/store';
+import * as fromAppReducer from '../../app.reducer';
 
 @Injectable({
   providedIn: 'root'
@@ -19,9 +21,11 @@ export class LoginService {
   constructor(private _httpClient: HttpClient, 
               private _router: Router,
               private _firebaseAuth: AngularFireAuth,
-              private _snackBar: MatSnackBar) { }
+              private _snackBar: MatSnackBar,
+              private _store: Store<{ui_state: fromAppReducer.State}>) { }
 
   authenticate(postRequest) {
+    this._store.dispatch({type: 'START_LOADING'});
     this.objUser = null;
     console.log(postRequest);
 
@@ -33,11 +37,13 @@ export class LoginService {
         console.log(result);
         this.isAuthorized.next(true);
         this.objUser = result;
-        this._router.navigate(['/training']);     
+        this._store.dispatch({type: 'STOP_LOADING'});   
+        this._router.navigate(['/training']);
       }
     ).catch(
       error => {
         console.log(error);
+        this._store.dispatch({type: 'STOP_LOADING'});
         this._snackBar.open(error.message, null, {duration:5000});
       }
     )
